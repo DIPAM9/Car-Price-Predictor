@@ -1,0 +1,2315 @@
+<!doctype html>
+<html lang="en">
+
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<style>
+body {
+  background-color: blue;
+}
+.mt-100{
+    margin-top: 50px;
+    margin-left:50px;
+}
+
+.change{
+    left:200px;
+    display: inline-block;
+    float: none;
+}
+
+.bold{
+  font-weight:bold;
+}
+
+
+</style>
+<title>Quikr Car Price Predictor</title>
+<body>
+<nav class="navbar bg-light">
+  <a href="" class="navbar-brand text-dark bold">Car Price Predictor</a>
+</nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 change">
+                <div class="card mt-100">
+                    <div class="card-body">
+                      <h4>Welcome to Quikr Car Price Predictor</h4>
+                        <form class="form" method="post" action="/predict">
+                            <label>Company Name</label><br>
+                          <select class="form-control" id="company" name="company" required="1" onchange="load_car_models(this.id,'car_models')">
+                            <option value="Select Company">Select Company</option>
+
+                            <option value="Audi">Audi</option>
+
+                            <option value="BMW">BMW</option>
+
+                            <option value="Chevrolet">Chevrolet</option>
+
+                            <option value="Datsun">Datsun</option>
+
+                            <option value="Fiat">Fiat</option>
+
+                            <option value="Force">Force</option>
+
+                            <option value="Ford">Ford</option>
+
+                            <option value="Hindustan">Hindustan</option>
+
+                            <option value="Honda">Honda</option>
+
+                            <option value="Hyundai">Hyundai</option>
+
+                            <option value="Jaguar">Jaguar</option>
+
+                            <option value="Jeep">Jeep</option>
+
+                            <option value="Land">Land</option>
+
+                            <option value="Mahindra">Mahindra</option>
+
+                            <option value="Maruti">Maruti</option>
+
+                            <option value="Mercedes">Mercedes</option>
+
+                            <option value="Mini">Mini</option>
+
+                            <option value="Mitsubishi">Mitsubishi</option>
+
+                            <option value="Nissan">Nissan</option>
+
+                            <option value="Renault">Renault</option>
+
+                            <option value="Skoda">Skoda</option>
+
+                            <option value="Tata">Tata</option>
+
+                            <option value="Toyota">Toyota</option>
+
+                            <option value="Volkswagen">Volkswagen</option>
+
+                        </select>
+                          <br>
+                            <label>Model Name</label><br>
+                            <select class="form-control" id="car_models" name="car_models" required="1">
+
+                             </select>
+                            <label>Year</label><br>
+                            <select class="form-control" id="year" name="year" required="1">
+
+                            <option value="Select Year">Select year</option>
+
+                            <option value="2019">2019</option>
+
+                            <option value="2018">2018</option>
+
+                            <option value="2017">2017</option>
+
+                            <option value="2016">2016</option>
+
+                            <option value="2015">2015</option>
+
+                            <option value="2014">2014</option>
+
+                            <option value="2013">2013</option>
+
+                            <option value="2012">2012</option>
+
+                            <option value="2011">2011</option>
+
+                            <option value="2010">2010</option>
+
+                            <option value="2009">2009</option>
+
+                            <option value="2008">2008</option>
+
+                            <option value="2007">2007</option>
+
+                            <option value="2006">2006</option>
+
+                            <option value="2005">2005</option>
+
+                            <option value="2004">2004</option>
+
+                            <option value="2003">2003</option>
+
+                            <option value="2002">2002</option>
+
+                            <option value="2001">2001</option>
+
+                            <option value="2000">2000</option>
+
+                            <option value="1995">1995</option>
+
+                        </select>
+                          <br>
+                            <label>Kilometer Driven</label><br>
+                            <input type="number" class="form-control" name="kms_driven"><br>
+                            <label>Fuel Type</label><br>
+                            <select class="form-control" id="fuel" name="fuel_type" required="1">
+
+                            <option value="Select Fuel Type">Select Fuel type</option>
+
+                            <option value="1">Petrol</option>
+
+                            <option value="2">Diesel</option>
+
+                            <option value="3">LPG</option>
+
+                            <option value="0">Other</option>
+
+                        </select>
+                          <br>
+                            <input type="submit" class="btn btn-primary btn-block btn-lg" value="Predict">
+                          <br>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+         </div>
+      </div>
+
+<script>
+  function load_car_models(company_id,car_model_id)
+    {
+        var company=document.getElementById(company_id);
+        var car_model= document.getElementById(car_model_id);
+        console.log(company.value);
+        car_model.value="";
+        car_model.innerHTML="";
+
+            if( company.value == "Select Company")
+            {
+            }
+
+            if( company.value == "Audi")
+            {
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Audi A3 Cabriolet";
+                        newOption.innerHTML="Audi A3 Cabriolet";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Audi A4 1.8";
+                        newOption.innerHTML="Audi A4 1.8";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Audi A4 2.0";
+                        newOption.innerHTML="Audi A4 2.0";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Audi A6 2.0";
+                        newOption.innerHTML="Audi A6 2.0";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Audi A8";
+                        newOption.innerHTML="Audi A8";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Audi Q3 2.0";
+                        newOption.innerHTML="Audi Q3 2.0";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Audi Q5 2.0";
+                        newOption.innerHTML="Audi Q5 2.0";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Audi Q7";
+                        newOption.innerHTML="Audi Q7";
+                        car_model.options.add(newOption);
+            }
+
+            if( company.value == "BMW")
+            {
+                        var newOption= document.createElement("option");
+                        newOption.value="BMW 3 Series";
+                        newOption.innerHTML="BMW 3 Series";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="BMW 5 Series";
+                        newOption.innerHTML="BMW 5 Series";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="BMW 7 Series";
+                        newOption.innerHTML="BMW 7 Series";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="BMW X1";
+                        newOption.innerHTML="BMW X1";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="BMW X1 sDrive20d";
+                        newOption.innerHTML="BMW X1 sDrive20d";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="BMW X1 xDrive20d";
+                        newOption.innerHTML="BMW X1 xDrive20d";
+                        car_model.options.add(newOption);
+
+
+
+            }
+
+            if( company.value == "Chevrolet")
+            {
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Beat";
+                        newOption.innerHTML="Chevrolet Beat";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Beat Diesel";
+                        newOption.innerHTML="Chevrolet Beat Diesel";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Beat LS";
+                        newOption.innerHTML="Chevrolet Beat LS";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Beat LT";
+                        newOption.innerHTML="Chevrolet Beat LT";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Beat PS";
+                        newOption.innerHTML="Chevrolet Beat PS";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Cruze LTZ";
+                        newOption.innerHTML="Chevrolet Cruze LTZ";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Enjoy";
+                        newOption.innerHTML="Chevrolet Enjoy";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Enjoy 1.4";
+                        newOption.innerHTML="Chevrolet Enjoy 1.4";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Sail 1.2";
+                        newOption.innerHTML="Chevrolet Sail 1.2";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Sail UVA";
+                        newOption.innerHTML="Chevrolet Sail UVA";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Spark";
+                        newOption.innerHTML="Chevrolet Spark";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Spark 1.0";
+                        newOption.innerHTML="Chevrolet Spark 1.0";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Spark LS";
+                        newOption.innerHTML="Chevrolet Spark LS";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Spark LT";
+                        newOption.innerHTML="Chevrolet Spark LT";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Tavera LS";
+                        newOption.innerHTML="Chevrolet Tavera LS";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Chevrolet Tavera Neo";
+                        newOption.innerHTML="Chevrolet Tavera Neo";
+                        car_model.options.add(newOption);
+
+            }
+
+            if( company.value == "Datsun")
+            {
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Datsun GO T";
+                        newOption.innerHTML="Datsun GO T";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Datsun Go Plus";
+                        newOption.innerHTML="Datsun Go Plus";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Datsun Redi GO";
+                        newOption.innerHTML="Datsun Redi GO";
+                        car_model.options.add(newOption);
+
+             }
+
+            if( company.value == "Fiat")
+            {
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Fiat Linea Emotion";
+                        newOption.innerHTML="Fiat Linea Emotion";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Fiat Petra ELX";
+                        newOption.innerHTML="Fiat Petra ELX";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Fiat Punto Emotion";
+                        newOption.innerHTML="Fiat Punto Emotion";
+                        car_model.options.add(newOption);
+
+            }
+
+            if( company.value == "Force")
+            {
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Force Motors Force";
+                        newOption.innerHTML="Force Motors Force";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Force Motors One";
+                        newOption.innerHTML="Force Motors One";
+                        car_model.options.add(newOption);
+
+            }
+
+            if( company.value == "Ford")
+            {
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Ford EcoSport";
+                        newOption.innerHTML="Ford EcoSport";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Ford EcoSport Ambiente";
+                        newOption.innerHTML="Ford EcoSport Ambiente";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Ford EcoSport Titanium";
+                        newOption.innerHTML="Ford EcoSport Titanium";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Ford EcoSport Trend";
+                        newOption.innerHTML="Ford EcoSport Trend";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Ford Endeavor 4x4";
+                        newOption.innerHTML="Ford Endeavor 4x4";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Ford Fiesta";
+                        newOption.innerHTML="Ford Fiesta";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Ford Fiesta SXi";
+                        newOption.innerHTML="Ford Fiesta SXi";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Ford Figo";
+                        newOption.innerHTML="Ford Figo";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Ford Figo Diesel";
+                        newOption.innerHTML="Ford Figo Diesel";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Ford Figo Duratorq";
+                        newOption.innerHTML="Ford Figo Duratorq";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Ford Figo Petrol";
+                        newOption.innerHTML="Ford Figo Petrol";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Ford Fusion 1.4";
+                        newOption.innerHTML="Ford Fusion 1.4";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Ford Ikon 1.3";
+                        newOption.innerHTML="Ford Ikon 1.3";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Ford Ikon 1.6";
+                        newOption.innerHTML="Ford Ikon 1.6";
+                        car_model.options.add(newOption);
+
+            }
+
+            if( company.value == "Hindustan")
+            {
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hindustan Motors Ambassador";
+                        newOption.innerHTML="Hindustan Motors Ambassador";
+                        car_model.options.add(newOption);
+
+
+            }
+
+            if( company.value == "Honda")
+            {
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda Accord";
+                        newOption.innerHTML="Honda Accord";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda Amaze";
+                        newOption.innerHTML="Honda Amaze";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda Amaze 1.2";
+                        newOption.innerHTML="Honda Amaze 1.2";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda Amaze 1.5";
+                        newOption.innerHTML="Honda Amaze 1.5";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda Brio";
+                        newOption.innerHTML="Honda Brio";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda Brio V";
+                        newOption.innerHTML="Honda Brio V";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda Brio VX";
+                        newOption.innerHTML="Honda Brio VX";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda City";
+                        newOption.innerHTML="Honda City";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda City 1.5";
+                        newOption.innerHTML="Honda City 1.5";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda City SV";
+                        newOption.innerHTML="Honda City SV";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda City VX";
+                        newOption.innerHTML="Honda City VX";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda City ZX";
+                        newOption.innerHTML="Honda City ZX";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda Jazz S";
+                        newOption.innerHTML="Honda Jazz S";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda Jazz VX";
+                        newOption.innerHTML="Honda Jazz VX";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda Mobilio";
+                        newOption.innerHTML="Honda Mobilio";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda Mobilio S";
+                        newOption.innerHTML="Honda Mobilio S";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Honda WR V";
+                        newOption.innerHTML="Honda WR V";
+                        car_model.options.add(newOption);
+
+            }
+
+            if( company.value == "Hyundai")
+            {
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Accent";
+                        newOption.innerHTML="Hyundai Accent";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Accent Executive";
+                        newOption.innerHTML="Hyundai Accent Executive";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Accent GLE";
+                        newOption.innerHTML="Hyundai Accent GLE";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Accent GLX";
+                        newOption.innerHTML="Hyundai Accent GLX";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Creta";
+                        newOption.innerHTML="Hyundai Creta";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Creta 1.6";
+                        newOption.innerHTML="Hyundai Creta 1.6";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Elantra 1.8";
+                        newOption.innerHTML="Hyundai Elantra 1.8";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Elantra SX";
+                        newOption.innerHTML="Hyundai Elantra SX";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Elite i20";
+                        newOption.innerHTML="Hyundai Elite i20";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Eon";
+                        newOption.innerHTML="Hyundai Eon";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Eon D";
+                        newOption.innerHTML="Hyundai Eon D";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Eon Era";
+                        newOption.innerHTML="Hyundai Eon Era";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Eon Magna";
+                        newOption.innerHTML="Hyundai Eon Magna";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Eon Sportz";
+                        newOption.innerHTML="Hyundai Eon Sportz";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Fluidic Verna";
+                        newOption.innerHTML="Hyundai Fluidic Verna";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Getz";
+                        newOption.innerHTML="Hyundai Getz";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Getz GLE";
+                        newOption.innerHTML="Hyundai Getz GLE";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Getz Prime";
+                        newOption.innerHTML="Hyundai Getz Prime";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Grand i10";
+                        newOption.innerHTML="Hyundai Grand i10";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Santro";
+                        newOption.innerHTML="Hyundai Santro";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Santro AE";
+                        newOption.innerHTML="Hyundai Santro AE";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Santro Xing";
+                        newOption.innerHTML="Hyundai Santro Xing";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Sonata Transform";
+                        newOption.innerHTML="Hyundai Sonata Transform";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Verna";
+                        newOption.innerHTML="Hyundai Verna";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Verna 1.4";
+                        newOption.innerHTML="Hyundai Verna 1.4";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Verna 1.6";
+                        newOption.innerHTML="Hyundai Verna 1.6";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Verna Fluidic";
+                        newOption.innerHTML="Hyundai Verna Fluidic";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Verna Transform";
+                        newOption.innerHTML="Hyundai Verna Transform";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Verna VGT";
+                        newOption.innerHTML="Hyundai Verna VGT";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Xcent Base";
+                        newOption.innerHTML="Hyundai Xcent Base";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai Xcent SX";
+                        newOption.innerHTML="Hyundai Xcent SX";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai i10";
+                        newOption.innerHTML="Hyundai i10";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai i10 Era";
+                        newOption.innerHTML="Hyundai i10 Era";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai i10 Magna";
+                        newOption.innerHTML="Hyundai i10 Magna";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai i10 Sportz";
+                        newOption.innerHTML="Hyundai i10 Sportz";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai i20";
+                        newOption.innerHTML="Hyundai i20";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai i20 Active";
+                        newOption.innerHTML="Hyundai i20 Active";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai i20 Asta";
+                        newOption.innerHTML="Hyundai i20 Asta";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai i20 Magna";
+                        newOption.innerHTML="Hyundai i20 Magna";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai i20 Select";
+                        newOption.innerHTML="Hyundai i20 Select";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Hyundai i20 Sportz";
+                        newOption.innerHTML="Hyundai i20 Sportz";
+                        car_model.options.add(newOption);
+
+
+            }
+
+            if( company.value == "Jaguar")
+            {
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Jaguar XE XE";
+                        newOption.innerHTML="Jaguar XE XE";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Jaguar XF 2.2";
+                        newOption.innerHTML="Jaguar XF 2.2";
+                        car_model.options.add(newOption);
+
+
+            }
+
+            if( company.value == "Jeep")
+            {
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Jeep Wrangler Unlimited";
+                        newOption.innerHTML="Jeep Wrangler Unlimited";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Jeep CL550";
+                        newOption.innerHTML="Mahindra Jeep CL550";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Jeep MM";
+                        newOption.innerHTML="Mahindra Jeep MM";
+                        car_model.options.add(newOption);
+
+            }
+
+            if( company.value == "Land")
+            {
+                        var newOption= document.createElement("option");
+                        newOption.value="Land Rover Freelander";
+                        newOption.innerHTML="Land Rover Freelander";
+                        car_model.options.add(newOption);
+
+            }
+
+            if( company.value == "Mahindra")
+            {
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Bolero DI";
+                        newOption.innerHTML="Mahindra Bolero DI";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Bolero Power";
+                        newOption.innerHTML="Mahindra Bolero Power";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Bolero SLE";
+                        newOption.innerHTML="Mahindra Bolero SLE";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Jeep CL550";
+                        newOption.innerHTML="Mahindra Jeep CL550";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Jeep MM";
+                        newOption.innerHTML="Mahindra Jeep MM";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra KUV100";
+                        newOption.innerHTML="Mahindra KUV100";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra KUV100 K8";
+                        newOption.innerHTML="Mahindra KUV100 K8";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Logan";
+                        newOption.innerHTML="Mahindra Logan";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Logan Diesel";
+                        newOption.innerHTML="Mahindra Logan Diesel";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Quanto C4";
+                        newOption.innerHTML="Mahindra Quanto C4";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Quanto C8";
+                        newOption.innerHTML="Mahindra Quanto C8";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Scorpio";
+                        newOption.innerHTML="Mahindra Scorpio";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Scorpio 2.6";
+                        newOption.innerHTML="Mahindra Scorpio 2.6";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Scorpio LX";
+                        newOption.innerHTML="Mahindra Scorpio LX";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Scorpio S10";
+                        newOption.innerHTML="Mahindra Scorpio S10";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Scorpio S4";
+                        newOption.innerHTML="Mahindra Scorpio S4";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Scorpio SLE";
+                        newOption.innerHTML="Mahindra Scorpio SLE";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Scorpio SLX";
+                        newOption.innerHTML="Mahindra Scorpio SLX";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Scorpio VLX";
+                        newOption.innerHTML="Mahindra Scorpio VLX";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Scorpio Vlx";
+                        newOption.innerHTML="Mahindra Scorpio Vlx";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Scorpio W";
+                        newOption.innerHTML="Mahindra Scorpio W";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra TUV300 T4";
+                        newOption.innerHTML="Mahindra TUV300 T4";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra TUV300 T8";
+                        newOption.innerHTML="Mahindra TUV300 T8";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Thar CRDe";
+                        newOption.innerHTML="Mahindra Thar CRDe";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra XUV500";
+                        newOption.innerHTML="Mahindra XUV500";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra XUV500 W10";
+                        newOption.innerHTML="Mahindra XUV500 W10";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra XUV500 W6";
+                        newOption.innerHTML="Mahindra XUV500 W6";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra XUV500 W8";
+                        newOption.innerHTML="Mahindra XUV500 W8";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Xylo D2";
+                        newOption.innerHTML="Mahindra Xylo D2";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Xylo E4";
+                        newOption.innerHTML="Mahindra Xylo E4";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mahindra Xylo E8";
+                        newOption.innerHTML="Mahindra Xylo E8";
+                        car_model.options.add(newOption);
+
+            }
+
+            if( company.value == "Maruti")
+            {
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki 800";
+                        newOption.innerHTML="Maruti Suzuki 800";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki A";
+                        newOption.innerHTML="Maruti Suzuki A";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Alto";
+                        newOption.innerHTML="Maruti Suzuki Alto";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Baleno";
+                        newOption.innerHTML="Maruti Suzuki Baleno";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Celerio";
+                        newOption.innerHTML="Maruti Suzuki Celerio";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Ciaz";
+                        newOption.innerHTML="Maruti Suzuki Ciaz";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Dzire";
+                        newOption.innerHTML="Maruti Suzuki Dzire";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Eeco";
+                        newOption.innerHTML="Maruti Suzuki Eeco";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Ertiga";
+                        newOption.innerHTML="Maruti Suzuki Ertiga";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Esteem";
+                        newOption.innerHTML="Maruti Suzuki Esteem";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Estilo";
+                        newOption.innerHTML="Maruti Suzuki Estilo";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Maruti";
+                        newOption.innerHTML="Maruti Suzuki Maruti";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Omni";
+                        newOption.innerHTML="Maruti Suzuki Omni";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Ritz";
+                        newOption.innerHTML="Maruti Suzuki Ritz";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki S";
+                        newOption.innerHTML="Maruti Suzuki S";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki SX4";
+                        newOption.innerHTML="Maruti Suzuki SX4";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Stingray";
+                        newOption.innerHTML="Maruti Suzuki Stingray";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Swift";
+                        newOption.innerHTML="Maruti Suzuki Swift";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Versa";
+                        newOption.innerHTML="Maruti Suzuki Versa";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Vitara";
+                        newOption.innerHTML="Maruti Suzuki Vitara";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Wagon";
+                        newOption.innerHTML="Maruti Suzuki Wagon";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Maruti Suzuki Zen";
+                        newOption.innerHTML="Maruti Suzuki Zen";
+                        car_model.options.add(newOption);
+
+
+            }
+
+            if( company.value == "Mercedes")
+            {
+                        var newOption= document.createElement("option");
+                        newOption.value="Mercedes Benz A";
+                        newOption.innerHTML="Mercedes Benz A";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mercedes Benz B";
+                        newOption.innerHTML="Mercedes Benz B";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mercedes Benz C";
+                        newOption.innerHTML="Mercedes Benz C";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mercedes Benz GLA";
+                        newOption.innerHTML="Mercedes Benz GLA";
+                        car_model.options.add(newOption);
+
+            }
+
+            if( company.value == "Mini")
+            {
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mini Cooper S";
+                        newOption.innerHTML="Mini Cooper S";
+                        car_model.options.add(newOption);
+
+            }
+
+            if( company.value == "Mitsubishi")
+            {
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mitsubishi Lancer 1.8";
+                        newOption.innerHTML="Mitsubishi Lancer 1.8";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Mitsubishi Pajero Sport";
+                        newOption.innerHTML="Mitsubishi Pajero Sport";
+                        car_model.options.add(newOption);
+
+
+            }
+
+            if( company.value == "Nissan")
+            {
+                        var newOption= document.createElement("option");
+                        newOption.value="Nissan Micra XL";
+                        newOption.innerHTML="Nissan Micra XL";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Nissan Micra XV";
+                        newOption.innerHTML="Nissan Micra XV";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Nissan Sunny";
+                        newOption.innerHTML="Nissan Sunny";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Nissan Sunny XL";
+                        newOption.innerHTML="Nissan Sunny XL";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Nissan Terrano XL";
+                        newOption.innerHTML="Nissan Terrano XL";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Nissan X Trail";
+                        newOption.innerHTML="Nissan X Trail";
+                        car_model.options.add(newOption);
+
+
+            }
+
+            if( company.value == "Renault")
+            {
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Renault Duster";
+                        newOption.innerHTML="Renault Duster";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Renault Duster 110";
+                        newOption.innerHTML="Renault Duster 110";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Renault Duster 110PS";
+                        newOption.innerHTML="Renault Duster 110PS";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Renault Duster 85";
+                        newOption.innerHTML="Renault Duster 85";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Renault Duster 85PS";
+                        newOption.innerHTML="Renault Duster 85PS";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Renault Duster RxL";
+                        newOption.innerHTML="Renault Duster RxL";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Renault Kwid";
+                        newOption.innerHTML="Renault Kwid";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Renault Kwid 1.0";
+                        newOption.innerHTML="Renault Kwid 1.0";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Renault Kwid RXT";
+                        newOption.innerHTML="Renault Kwid RXT";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Renault Lodgy 85";
+                        newOption.innerHTML="Renault Lodgy 85";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Renault Scala RxL";
+                        newOption.innerHTML="Renault Scala RxL";
+                        car_model.options.add(newOption);
+
+
+            }
+
+            if( company.value == "Skoda")
+            {
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Skoda Fabia";
+                        newOption.innerHTML="Skoda Fabia";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Skoda Fabia 1.2L";
+                        newOption.innerHTML="Skoda Fabia 1.2L";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Skoda Fabia Classic";
+                        newOption.innerHTML="Skoda Fabia Classic";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Skoda Laura";
+                        newOption.innerHTML="Skoda Laura";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Skoda Octavia Classic";
+                        newOption.innerHTML="Skoda Octavia Classic";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Skoda Rapid Elegance";
+                        newOption.innerHTML="Skoda Rapid Elegance";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Skoda Superb 1.8";
+                        newOption.innerHTML="Skoda Superb 1.8";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Skoda Yeti Ambition";
+                        newOption.innerHTML="Skoda Yeti Ambition";
+                        car_model.options.add(newOption);
+
+
+            }
+
+            if( company.value == "Tata")
+            {
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Aria Pleasure";
+                        newOption.innerHTML="Tata Aria Pleasure";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Bolt XM";
+                        newOption.innerHTML="Tata Bolt XM";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Indica";
+                        newOption.innerHTML="Tata Indica";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Indica V2";
+                        newOption.innerHTML="Tata Indica V2";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Indica eV2";
+                        newOption.innerHTML="Tata Indica eV2";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Indigo CS";
+                        newOption.innerHTML="Tata Indigo CS";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Indigo LS";
+                        newOption.innerHTML="Tata Indigo LS";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Indigo LX";
+                        newOption.innerHTML="Tata Indigo LX";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Indigo Marina";
+                        newOption.innerHTML="Tata Indigo Marina";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Indigo eCS";
+                        newOption.innerHTML="Tata Indigo eCS";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Manza";
+                        newOption.innerHTML="Tata Manza";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Manza Aqua";
+                        newOption.innerHTML="Tata Manza Aqua";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Manza Aura";
+                        newOption.innerHTML="Tata Manza Aura";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Manza ELAN";
+                        newOption.innerHTML="Tata Manza ELAN";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Nano";
+                        newOption.innerHTML="Tata Nano";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Nano Cx";
+                        newOption.innerHTML="Tata Nano Cx";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Nano GenX";
+                        newOption.innerHTML="Tata Nano GenX";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Nano LX";
+                        newOption.innerHTML="Tata Nano LX";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Nano Lx";
+                        newOption.innerHTML="Tata Nano Lx";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Sumo Gold";
+                        newOption.innerHTML="Tata Sumo Gold";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Sumo Grande";
+                        newOption.innerHTML="Tata Sumo Grande";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Sumo Victa";
+                        newOption.innerHTML="Tata Sumo Victa";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Tiago Revotorq";
+                        newOption.innerHTML="Tata Tiago Revotorq";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Tiago Revotron";
+                        newOption.innerHTML="Tata Tiago Revotron";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Tigor Revotron";
+                        newOption.innerHTML="Tata Tigor Revotron";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Venture EX";
+                        newOption.innerHTML="Tata Venture EX";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Vista Quadrajet";
+                        newOption.innerHTML="Tata Vista Quadrajet";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Zest Quadrajet";
+                        newOption.innerHTML="Tata Zest Quadrajet";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Zest XE";
+                        newOption.innerHTML="Tata Zest XE";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Tata Zest XM";
+                        newOption.innerHTML="Tata Zest XM";
+                        car_model.options.add(newOption);
+
+
+
+            }
+
+            if( company.value == "Toyota")
+            {
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Toyota Corolla";
+                        newOption.innerHTML="Toyota Corolla";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Toyota Corolla Altis";
+                        newOption.innerHTML="Toyota Corolla Altis";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Toyota Corolla H2";
+                        newOption.innerHTML="Toyota Corolla H2";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Toyota Etios";
+                        newOption.innerHTML="Toyota Etios";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Toyota Etios G";
+                        newOption.innerHTML="Toyota Etios G";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Toyota Etios GD";
+                        newOption.innerHTML="Toyota Etios GD";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Toyota Etios Liva";
+                        newOption.innerHTML="Toyota Etios Liva";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Toyota Fortuner";
+                        newOption.innerHTML="Toyota Fortuner";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Toyota Fortuner 3.0";
+                        newOption.innerHTML="Toyota Fortuner 3.0";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Toyota Innova 2.0";
+                        newOption.innerHTML="Toyota Innova 2.0";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Toyota Innova 2.5";
+                        newOption.innerHTML="Toyota Innova 2.5";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Toyota Qualis";
+                        newOption.innerHTML="Toyota Qualis";
+                        car_model.options.add(newOption);
+
+            }
+
+            if( company.value == "Volkswagen")
+            {
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Volkswagen Jetta Comfortline";
+                        newOption.innerHTML="Volkswagen Jetta Comfortline";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Volkswagen Jetta Highline";
+                        newOption.innerHTML="Volkswagen Jetta Highline";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Volkswagen Passat Diesel";
+                        newOption.innerHTML="Volkswagen Passat Diesel";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Volkswagen Polo";
+                        newOption.innerHTML="Volkswagen Polo";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Volkswagen Polo Comfortline";
+                        newOption.innerHTML="Volkswagen Polo Comfortline";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Volkswagen Polo Highline";
+                        newOption.innerHTML="Volkswagen Polo Highline";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Volkswagen Polo Highline1.2L";
+                        newOption.innerHTML="Volkswagen Polo Highline1.2L";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Volkswagen Polo Trendline";
+                        newOption.innerHTML="Volkswagen Polo Trendline";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Volkswagen Vento Comfortline";
+                        newOption.innerHTML="Volkswagen Vento Comfortline";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Volkswagen Vento Highline";
+                        newOption.innerHTML="Volkswagen Vento Highline";
+                        car_model.options.add(newOption);
+
+
+
+
+                        var newOption= document.createElement("option");
+                        newOption.value="Volkswagen Vento Konekt";
+                        newOption.innerHTML="Volkswagen Vento Konekt";
+                        car_model.options.add(newOption);
+
+            }
+     }
+
+
+</script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+</body>
+</html>
+
+
+
+
